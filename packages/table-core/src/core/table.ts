@@ -5,7 +5,6 @@ import {
   TableOptionsResolved,
   TableState,
   Table,
-  InitialTableState,
   Row,
   Column,
   RowModel,
@@ -38,7 +37,7 @@ import { RowPinning } from '../features/RowPinning'
 import { RowSelection } from '../features/RowSelection'
 import { RowSorting } from '../features/RowSorting'
 
-const builtInFeatures = [
+export const builtInFeatures: Array<TableFeature> = [
   Headers,
   ColumnVisibility,
   ColumnOrdering,
@@ -155,7 +154,7 @@ export interface CoreOptions<TData extends RowData> {
    * @link [API Docs](https://tanstack.com/table/v8/docs/api/core/table#initialstate)
    * @link [Guide](https://tanstack.com/table/v8/docs/guide/tables)
    */
-  initialState?: InitialTableState
+  initialState?: Partial<TableState>
   /**
    * This option is used to optionally implement the merging of table options.
    * @link [API Docs](https://tanstack.com/table/v8/docs/api/core/table#mergeoptions)
@@ -182,7 +181,7 @@ export interface CoreOptions<TData extends RowData> {
    * @link [API Docs](https://tanstack.com/table/v8/docs/api/core/table#renderfallbackvalue)
    * @link [Guide](https://tanstack.com/table/v8/docs/guide/tables)
    */
-  renderFallbackValue: any
+  renderFallbackValue?: any
   /**
    * The `state` option can be used to optionally _control_ part or all of the table state. The state you pass here will merge with and overwrite the internal automatically-managed state to produce the final state for the table. You can also listen to state changes via the `onStateChange` option.
    * > Note: Any state passed in here will override both the internal state and any other `initialState` you provide.
@@ -190,6 +189,15 @@ export interface CoreOptions<TData extends RowData> {
    * @link [Guide](https://tanstack.com/table/v8/docs/guide/tables)
    */
   state: Partial<TableState>
+}
+
+export function getInitialTableState(
+  initialState: Partial<TableState> | undefined = {}
+): TableState {
+  builtInFeatures.forEach(feature => {
+    initialState = feature._getInitialState?.(initialState) ?? initialState
+  })
+  return initialState as TableState
 }
 
 export function tableOptions<TData extends RowData = any>(
@@ -330,9 +338,12 @@ export function _createTable<TData extends RowData>(
 
   let table = { _features } as unknown as Table<TData>
 
-  const defaultOptions = table._features.reduce((obj, feature) => {
-    return Object.assign(obj, feature._getDefaultOptions?.(table))
-  }, {}) as TableOptionsResolved<TData>
+  const defaultOptions = _features.reduce(
+    (obj, feature) => {
+      return Object.assign(obj, feature._getDefaultOptions?.(table))
+    },
+    { renderFallbackValue: null }
+  ) as TableOptionsResolved<TData>
 
   const mergeOptions = (options: TableOptionsResolved<TData>) => {
     if (table.options.mergeOptions) {
@@ -345,17 +356,7 @@ export function _createTable<TData extends RowData>(
     }
   }
 
-  const coreInitialState: CoreTableState = {}
-
-  let initialState = {
-    ...coreInitialState,
-    ...(options.initialState ?? {}),
-  } as TableState
-
-  table._features.forEach(feature => {
-    initialState = (feature._getInitialState?.(initialState) ??
-      initialState) as TableState
-  })
+  const initialState = getInitialTableState(options.initialState)
 
   const queued: (() => void)[] = []
   let queuedTimeout = false

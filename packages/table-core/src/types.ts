@@ -112,7 +112,7 @@ export interface TableFeature<TData extends RowData = any> {
   _getDefaultOptions?: (
     table: Table<TData>
   ) => Partial<TableOptionsResolved<TData>>
-  _getInitialState?: (initialState?: InitialTableState) => Partial<TableState>
+  _getInitialState?: (initialState?: Partial<TableState>) => Partial<TableState>
 }
 
 export interface TableMeta<TData extends RowData> {}
@@ -173,7 +173,7 @@ export interface TableOptionsResolved<TData extends RowData>
 export interface TableOptions<TData extends RowData>
   extends PartialKeys<
     TableOptionsResolved<TData>,
-    'state' | 'onStateChange' | 'renderFallbackValue'
+    'state' | 'onStateChange'
   > {}
 
 export interface TableState
@@ -190,23 +190,6 @@ export interface TableState
     ColumnSizingTableState,
     PaginationTableState,
     RowSelectionTableState {}
-
-interface CompleteInitialTableState
-  extends CoreTableState,
-    VisibilityTableState,
-    ColumnOrderTableState,
-    ColumnPinningTableState,
-    RowPinningTableState,
-    ColumnFiltersTableState,
-    GlobalFilterTableState,
-    SortingTableState,
-    ExpandedTableState,
-    GroupingTableState,
-    ColumnSizingTableState,
-    PaginationInitialTableState,
-    RowSelectionTableState {}
-
-export interface InitialTableState extends Partial<CompleteInitialTableState> {}
 
 export interface Row<TData extends RowData>
   extends CoreRow<TData>,

@@ -2779,6 +2779,9 @@ importers:
 
   packages/react-table:
     dependencies:
+      '@tanstack/react-store':
+        specifier: ^0.5.0
+        version: 0.5.0(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       '@tanstack/table-core':
         specifier: workspace:*
         version: link:../table-core
@@ -5436,11 +5439,20 @@ packages:
     peerDependencies:
       react: ^18.0.0
 
+  '@tanstack/react-store@0.5.0':
+    resolution: {integrity: sha512-OL2g5H39Z9HKxrLdMVW6BIcB/Jo3rPe9F/UfjiooNpNFkdpS0u++wKWx6e+k0zRejgyf37OTG9+Jxb4v8uo+4w==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
+
   '@tanstack/react-virtual@3.4.0':
     resolution: {integrity: sha512-GZN4xn/Tg5w7gvYeVcMVCeL4pEyUhvg+Cp6KX2Z01C4FRNxIWMgIQ9ibgMarNQfo+gt0PVLcEER4A9sNv/jlow==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  '@tanstack/store@0.5.0':
+    resolution: {integrity: sha512-jftrdrIx/PLRAIY0xLsrdvBRUt+aFtcMfuU04/uCk1e72WD1QKS3OIT2qjrzCvTqbCIabSFfakGI1wMHmU+KHg==}
 
   '@tanstack/virtual-core@3.4.0':
     resolution: {integrity: sha512-75jXqXxqq5M5Veb9KP1STi8kA5u408uOOAefk2ftHDGCpUk3RP6zX++QqfbmHJTBiU72NQ+ghgCZVts/Wocz8Q==}
@@ -9752,6 +9764,11 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
+  use-sync-external-store@1.2.2:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -13295,11 +13312,20 @@ snapshots:
       '@tanstack/query-core': 5.32.0
       react: 18.3.0
 
+  '@tanstack/react-store@0.5.0(react-dom@18.3.0(react@18.3.0))(react@18.3.0)':
+    dependencies:
+      '@tanstack/store': 0.5.0
+      react: 18.3.0
+      react-dom: 18.3.0(react@18.3.0)
+      use-sync-external-store: 1.2.2(react@18.3.0)
+
   '@tanstack/react-virtual@3.4.0(react-dom@18.3.0(react@18.3.0))(react@18.3.0)':
     dependencies:
       '@tanstack/virtual-core': 3.4.0
       react: 18.3.0
       react-dom: 18.3.0(react@18.3.0)
+
+  '@tanstack/store@0.5.0': {}
 
   '@tanstack/virtual-core@3.4.0': {}
 
@@ -18043,6 +18069,10 @@ snapshots:
     dependencies:
       querystringify: 2.2.0
       requires-port: 1.0.0
+
+  use-sync-external-store@1.2.2(react@18.3.0):
+    dependencies:
+      react: 18.3.0
 
   util-deprecate@1.0.2: {}
 
