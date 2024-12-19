@@ -55,7 +55,7 @@ export interface GlobalFilterOptions<TData extends RowData> {
    * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/global-filtering#globalfilterfn)
    * @link [Guide](https://tanstack.com/table/v8/docs/guide/global-filtering)
    */
-  globalFilterFn?: FilterFnOption<TData>
+  globalFilterFn?: FilterFnOption<TData> | string
   /**
    * If provided, this function will be called with an `updaterFn` when `state.globalFilter` changes. This overrides the default internal state management, so you will need to persist the state change either fully or partially outside of the table.
    * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/global-filtering#onglobalfilterchange)
